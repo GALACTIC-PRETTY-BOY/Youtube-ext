@@ -1,0 +1,7 @@
+Flask
+pandas
+numpy
+tensorflow
+keras
+nltk
+google-api-python-client
