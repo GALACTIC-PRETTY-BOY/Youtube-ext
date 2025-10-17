@@ -42,7 +42,7 @@ def preprocess(text):
         if w.isalpha() and w not in stop_words
     ])
 
-API_KEY = "AIzaSyAiggkZTjKRGd_3pYRTJIe-08QOjfnHYgI"
+API_KEY = "AIzaSyAlM9YHLtaMRuVVp9nf0yCJTQ-cJkhrgUc"
 video_id = "f1mfoI1ouWE"
 youtube = build("youtube", "v3", developerKey=API_KEY)
 
@@ -90,4 +90,5 @@ for i, comment in enumerate(comments_df["COMMENT"]):
     print(f"Comment: {comment}")
     print(f"Predicted Sentiment: {sentiment}")
     print(f"Probabilities -> Negative: {probs[0]:.2f}, Neutral: {probs[1]:.2f}, Positive: {probs[2]:.2f}")
+
     print("-" * 60)
