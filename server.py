@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-import testing_models_1  # rename imported script accordingly
+import testing_models # rename imported script accordingly
 
 app = Flask(__name__)
 
@@ -11,3 +11,4 @@ def analyze():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
