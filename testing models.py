@@ -3,7 +3,7 @@ import re
 import numpy as np
 import tensorflow as tf
 import pickle
-from keras_preprocessing.sequence import pad_sequences
+from tensorflow.keras.preprocessing.sequence import pad_sequences
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
@@ -14,14 +14,14 @@ model = tf.keras.models.load_model("ModelV2.keras")
 with open("tokenizer.pkl", "rb") as f:
     tokenizer = pickle.load(f)
 
-comment_max_len = 40     
-context_max_len = 120    
+comment_max_len = 40
+context_max_len = 120
 
 appos = {
     "aren't": "are not", "can't": "cannot", "couldn't": "could not",
     "didn't": "did not", "doesn't": "does not", "dont": "do not",
     "arent": "are not", "cant": "cannot", "couldnt": "could not",
-    "didnt": "did not", "doesnt": "does not"
+    "didnt": "did not", "doesnt": "do not"
 }
 
 stop_words = set(stopwords.words("english"))
@@ -42,7 +42,7 @@ def preprocess(text):
         if w.isalpha() and w not in stop_words
     ])
 
-API_KEY = "AIzaSyAlM9YHLtaMRuVVp9nf0yCJTQ-cJkhrgUc"
+API_KEY = "AIzaSyAiggkZTjKRGd_3pYRTJIe-08QOjfnHYgI"
 video_id = "f1mfoI1ouWE"
 youtube = build("youtube", "v3", developerKey=API_KEY)
 
@@ -70,7 +70,7 @@ comments_df = pd.DataFrame({
 
 comments_df["processed"] = comments_df["COMMENT"].apply(preprocess)
 
-sequences = tokenizer.texts_to_sequences(comments_df["processed"])
+sequences = tokenizer.texts_to_sequences(comments_df["processed"].astype(str))
 
 padded = pad_sequences(sequences, maxlen=comment_max_len, padding="post")
 
@@ -90,5 +90,4 @@ for i, comment in enumerate(comments_df["COMMENT"]):
     print(f"Comment: {comment}")
     print(f"Predicted Sentiment: {sentiment}")
     print(f"Probabilities -> Negative: {probs[0]:.2f}, Neutral: {probs[1]:.2f}, Positive: {probs[2]:.2f}")
-
     print("-" * 60)
